@@ -1,0 +1,10 @@
+{
+  "name": "JACOUNT code recognizing",
+  "description": "recognize and fill the table of code",
+  "version": "0.1",
+  "background": { "scripts": ["main.js"] },
+  "browser_action": {
+      "name": "Click to re-recognize"
+  },
+  "manifest_version": 2
+}
