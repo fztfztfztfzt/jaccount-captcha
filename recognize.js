@@ -4,9 +4,9 @@ function recognize(x1){
 	function mapminmax_apply(x,settings){
 		y = [];
 		for(var i=0;i<x.length;i++){
-			y.push([]);
+			y.append([])
 			for(var j=0;j<settings.xoffset.length;j++){
-				y[i].push((x[i][j]-settings.xoffset[j])*settings.gain[j]+settings.ymin);
+				y[i].append((x[i][j]-settings.xoffset[j])*settings.gain[j]+settings.ymin[j]);
 			}
 		}
 		return y;
@@ -16,9 +16,9 @@ function recognize(x1){
 	function removeconstantrows_apply(x,settings){
 		y = [];
 		for(var i=0;i<x.length;i++){
-			y.push([]);
+			y.append([]);
 			for(var j=0;j<settings.keep.length;j++){
-				y[i].push(x[i][settings.keep[j]-1]);
+				y[i].append(x[i][settings.keep[j]-1]);
 			}
 		}
 		return y;
@@ -38,9 +38,9 @@ function recognize(x1){
 	function mapminmax_reverse(y,settings){
 		x = [];
 		for(var i=0;i<y.length;i++){
-			x.push([]);
-			for(var j=0;j<settings.xoffset.length;j++){
-				x[i].push((y[i][j]-settings.ymin)/settings.gain[j]+settings.xoffset[j]);
+			x.append([]);
+			for(var j=0;j<settings.keep.length;j++){
+				x[i].append((y[i][j]-settings.xoffset[j])/settings.gain[j]+settings.ymin[j]);
 			}
 		}
 		return x;
@@ -75,17 +75,17 @@ function recognize(x1){
 	//Input 1
 	xp1 = removeconstantrows_apply(x1,x1_step1);
 	xp1 = mapminmax_apply(xp1,x1_step2);
-	
+
 	//Layer 1;
 	y = [];
 	for(var i=0;i<xp1.length;i++){
-		y.push([]);
+		y.append([]);
 		for(var j=0;j<IW1_1.length;j++){
 			s = 0;
 			for(var m=0;m<IW1_1[0].length;m++){
 				s = s + xp1[i][m] * IW1_1[j][m];
 			}
-			y[i].push(s+b1[j]);
+			y[i].append(s+b1[j]);
 		}
 	}
 	a1 = tansig_apply(y);
@@ -93,13 +93,13 @@ function recognize(x1){
 	//Layer 2
 	a2 = [];
 	for(var i=0;i<a1.length;i++){
-		a2.push([]);
+		a2.append([]);
 		for(var j=0;j<LW2_1.length;j++){
 			s = 0;
 			for(var m=0;m<LW2_1[0].length;m++){
 				s = s + a1[i][m] * LW2_1[j][m];
 			}
-			a2[i].push(s+b2[j]);
+			a2[i].append(s+b2[j]);
 		}
 	}
 
