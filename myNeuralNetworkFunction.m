@@ -50,7 +50,7 @@ a1 = tansig_apply(repmat(b1,1,Q) + IW1_1*xp1);
 a2 = repmat(b2,1,Q) + LW2_1*a1;
 
 % Output 1
-y1 = mapminmax_reverse(a2,y1_step1)
+y1 = mapminmax_reverse(a2,y1_step1);
 y1 = y1';
 end
 
