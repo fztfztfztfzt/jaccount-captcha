@@ -2,9 +2,16 @@
   "name": "JACOUNT code recognizing",
   "description": "recognize and fill the table of code",
   "version": "0.1",
-  "background": { "scripts": ["main.js"] },
+  "content_scripts": [{
+    "matches":["https://jaccount.sjtu.edu.cn/*"],
+    "js":["main.js"],
+    "run_at":"document_idle",
+    "all_frame":true
+  }],
+  "permissions": ["tabs","storage"],
   "browser_action": {
-      "name": "Click to re-recognize"
+      "name": "Click to re-recognize",
+      "default_popup":"popup.html"
   },
   "manifest_version": 2
 }

@@ -4,7 +4,7 @@ function recognize(x1){
 	function mapminmax_apply(x,settings){
 		y = [];
 		for(var i=0;i<x.length;i++){
-			y.push([])
+			y.push([]);
 			for(var j=0;j<settings.xoffset.length;j++){
 				y[i].push((x[i][j]-settings.xoffset[j])*settings.gain[j]+settings.ymin);
 			}

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script type="text/javascript">
+        function save(){
+            alert("alert");
+            localUser = document.getElementById('user');
+            localPwd = document.getElementById('pwd');
+            var tmp = document.getElementById('suc');
+            tmp.innerHTML="succeed";
+            chrome.storage.sync.set({user: localUser.value}, function(result) {});
+            chrome.storage.sync.set({pwd: localPwd.value}, function(result) {
+                var tmp = document.getElementById('suc');
+                tmp.innerHTML="succeed";
+            });
+        }
+    </script>
+</head>
+<body>
+    <p>请设置你的JACCOUNT账号密码</p>
+    <div class="input-control">
+        <input class="form-input" type="text" id="user" name="user" placeholder="用户名">
+    </div>
+    <div class="input-control">
+        <input class="form-input" type="text" id="psw" name="psw" placeholder="密码">
+    </div>
+    <div class="input-control">
+        <button onclick="save()">确定</button>
+    </div>
+    <p id="suc">请提交</p>
+
+</body>
+</html>
