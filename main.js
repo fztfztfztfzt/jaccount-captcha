@@ -1,35 +1,14 @@
-function updateIcon() {
-    /*
-  chrome.browserAction.setIcon({path:"icon" + current + ".png"});
-  current++;
-
-  if (current > max)
-        current = min;
-  */
-  //console.log("out there");
-  //console.log(document.getElementsByTagName("title")[0].innerText);
-  if(document.getElementsByTagName("title")[0].innerText=="上海交通大学统一身份认证")
-  {
-      console.log("in convert");
-      main();
-  }
-}
-
 function main(){
+    console.log("Start");
     var caCanvas = document.createElement("canvas");
-    //caCanvas.id="myCanvas";
     document.body.appendChild(caCanvas);
-    //console.log("create canvas");
     var captcha = document.getElementsByTagName('img')[1];
     caCanvas.width = captcha.naturalWidth;
-    //console.log(captcha.naturalWidth);
     caCanvas.height= captcha.naturalHeight;
     var ctx = caCanvas.getContext('2d');
     ctx.drawImage(captcha, 0, 0);
-    //var source = ctx.getImageData(0,0,caCanvas.width,caCanvas.height);
     var imgData = ctx.getImageData(0,0,caCanvas.width,caCanvas.height).data;
-    //console.log(imgData);
-    var imgGrey = convertToGrey(imgData);
+    var imgGrey = convertToGray(imgData);
 
     var result = cutWord(imgGrey);
 
@@ -37,8 +16,6 @@ function main(){
     var recordY = result[1];
     var number = result[2];
     /*----------------------------------------*/
-    console.log(number);
-    console.log(recordX);
     ctx.strokeStyle = 'red';
     /*ctx.lineWidth = 2;*/
     ctx.beginPath();
@@ -91,17 +68,13 @@ function main(){
         //console.log(str2);
         str = str.concat(str2);
     }
-    //str=str.concat('\n');
     capForm.value=str;
-    //console.log(str);
-
-    //t = setTimeout("location.reload(true)",100);
+    console.log(str);
     var button = document.getElementsByClassName("btn");
     psw.click();
 
-    button[0].click();
-    t=setTimeout("judge()",10);
-
+    //button[0].click();
+    //t=setTimeout("judge()",10);
 
     //drawCut(imgGrey,recordX,recordY,number);
 }
@@ -114,6 +87,7 @@ function judge()
     }
 }
 
+/** 在canvas上绘制单字图片，用于调试。可忽略，不影响核心代码。 */
 function drawCut(imgGrey,recordX,recordY,number)
 {
     //console.log(imgGrey);
@@ -136,8 +110,6 @@ function drawCut(imgGrey,recordX,recordY,number)
         ctxSet[i] = canvasSet[i].getContext('2d');
         imgDataSet[i] = ctxSet[i].createImageData(20,25);
     }
-    //source.data=imgGrey;
-    //console.log("in drawing");
     for(var k=0;k<number;k++)
     {
         cnt = 0;
@@ -189,7 +161,7 @@ function drawCut(imgGrey,recordX,recordY,number)
     //console.log(imgDataSet[1]);
 }
 
-function convertToGrey(imgData) {
+function convertToGray(imgData) {
     var imgGray = new Array(40);
     for (var i =0;i<40;i++)
     {
@@ -212,16 +184,16 @@ function convertToGrey(imgData) {
     return imgGray;
 }
 
-function cutWord(imgGrey)
+/**返回每个字符的坐标和字符数 */
+function cutWord(imgGray)
 {
-
     /**二值化 */
     for(var i=0;i<40;i++){
         for(var j=0;j<100;j++){
-            if(imgGrey[i][j]>(255*0.71))
-                imgGrey[i][j] = 0;
+            if(imgGray[i][j]>(255*0.71))
+                imgGray[i][j] = 0;
             else
-                imgGrey[i][j] = 1;
+                imgGray[i][j] = 1;
         }
     }
 
@@ -231,6 +203,8 @@ function cutWord(imgGrey)
     var recordX = new Array(10);
     var recordY = new Array(5);
     var flag;
+    /*初始化数组*/
+    //----------------------------------------------------------//
     for(i=0;i<100;i++){
         x[i]=0;
     }
@@ -248,11 +222,13 @@ function cutWord(imgGrey)
     for(i=0;i<10;i++){
         recordX[i]=0;
     }
+    /*初始化完毕*/
+    //----------------------------------------------------------//
 
-    /**获取字符数和横坐标 */
+    /**横向分离字符，获取字符数和横坐标 */
     for( i=0;i<40;i++){
         for( j=0;j<100;j++){
-            x[j]=x[j]+imgGrey[i][j];
+            x[j]=x[j]+imgGray[i][j];
         }
     }
     flag=0;
@@ -272,7 +248,7 @@ function cutWord(imgGrey)
         flag=0;
         for(i=recordX[index*2];i<=recordX[index*2+1];i++){
             for(j=0;j<40;j++){
-                y[index][j]=y[index][j]+imgGrey[j][i];
+                y[index][j]=y[index][j]+imgGray[j][i];
             }
         }
     }
@@ -293,25 +269,13 @@ function cutWord(imgGrey)
             }
         }
     }
-    //console.log("in path");
-
     var result=[recordX,recordY,number];
     return result;
 }
 
+/** 返回所有单字的集合 */
 function seperateWord(imgGrey,recordX,recordY,number) {
     var imgSet = new Array(5);
-    //initial
-    /*
-    for(var i=0;i<5;i++)
-    {
-        imgSet[i]=new Array(25);
-        for(var j=0;j<25;j++)
-        {
-            imgSet[i][j]=new Array(20);
-        }
-    }*/
-
     for(var i=0;i<number;i++)
     {
         imgSet[i]=imcrop(imgGrey,recordX[i*2],recordY[i][0],recordX[i*2+1]-recordX[i*2],recordY[i][1]-recordY[i][0]);
@@ -319,47 +283,39 @@ function seperateWord(imgGrey,recordX,recordY,number) {
     return imgSet;
 }
 
-function imcrop(imgGrey,x0,y0,dx,dy)
-{
+/** 输入图像矩阵、起始坐标及图像横宽，返回裁剪后并适配到25*20大小的图片*/
+function imcrop(imgGrey,x0,y0,dx,dy){
     var img = new Array(25);
-    for(var i=0;i<25;i++)
-    {
+    for(var i=0;i<25;i++){
         img[i]=new Array(20);
     }
-    for(var i=0;i<25;i++)
-    {
-        for(var j=0;j<20;j++)
-        {
+    for(i=0;i<25;i++){
+        for(var j=0;j<20;j++){
             img[i][j]=0;
         }
     }
     var x=0;
     var y=0;
-    //console.log(imgGrey);
-    for(var i=y0;i<=y0+dy&&x<20;i++)
-    {
+    for(i=y0;i<=y0+dy&&x<20;i++){
         x=0;
-        for(var j=x0;j<=x0+dx&&y<25;j++)
-        {
+        for(j=x0;j<=x0+dx&&y<25;j++){
             //console.log(x,y,i,j);
-            if(imgGrey[i][j]>0)
-            {
+            if(imgGrey[i][j]>0){
                 img[y][x]=1;
             }
-            else
-            {
+            else{
                 img[y][x]=0;
             }
             x++;
         }
         y++;
     }
-    //console.log(img);
     return img;
 }
 
-function reshape(img)
-{
+/**将图像重排
+ * 返回一维数组*/
+function reshape(img){
     var input = new Array(500);
     var cnt = 0;
     for(var i=0;i<25;i++)
@@ -373,6 +329,7 @@ function reshape(img)
     return input;
 }
 
+/** 神经网络矩阵，返回字母概率*/
 function recognize(x1){
     //===== MODULE FUNCTIONS ========
     //Map Minimum and Maximum Input Processing Function
@@ -483,9 +440,6 @@ function recognize(x1){
     return y1;
 }
 
-
-
-//chrome.browserAction.onClicked.addListener(updateIcon);
-
-t=setTimeout("updateIcon()",100)
+//chrome.browserAction.onClicked.addListener(updateIcon)
+t=setTimeout("main()",100);
 
