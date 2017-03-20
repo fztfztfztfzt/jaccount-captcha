@@ -1,10 +1,20 @@
 localUser = document.getElementById('user');
 localPwd = document.getElementById('psw');
 chrome.storage.sync.get('user', function(result) {
-    localUser.value=result['user'];
+    if(typeof(result['user'])=="undefined") {
+		localUser.value="";
+	}
+    else{
+    	localUser.value=result['user'];
+    }
 });
 chrome.storage.sync.get('pwd', function(result) {
-    localPwd.value=result['pwd'];
+    if(typeof(result['pwd'])=="undefined") {
+        localPwd.value="";
+    }
+    else {
+        localPwd.value = result['pwd'];
+    }
 });
 var ok = document.getElementById('ok');
 ok.onclick = function save(){
