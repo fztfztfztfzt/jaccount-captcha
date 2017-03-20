@@ -71,15 +71,19 @@ function main(){
     capForm.value=str;
     console.log(str);
     button = document.getElementsByClassName("btn");
-    psw.click();
 
     waitClick();
     //drawCut(imgGrey,recordX,recordY,number);
 }
 
 function waitClick() {
-    console.log(psw.value);
     if (psw.value=="") {
+        chrome.storage.sync.get('user', function(result) {
+            user.value=result['user'];
+        });
+        chrome.storage.sync.get('pwd', function(result) {
+            psw.value=result['pwd'];
+        });
         t = setTimeout("waitClick()", 100);
     }
     else{
