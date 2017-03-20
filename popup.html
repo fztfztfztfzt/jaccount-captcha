@@ -6,16 +6,29 @@
 </head>
 <body>
     <p>请设置你的JACCOUNT账号密码</p>
-    <div class="input-control">
-        <input class="form-input" type="text" id="user" name="user" placeholder="用户名">
-    </div>
-    <div class="input-control">
-        <input class="form-input" type="password" id="psw" name="psw" placeholder="密码">
-    </div>
-    <div class="input-control">
-        <button id="ok">确定</button>
-    </div>
-    <p id="suc">Please set your ID and password</p>
-	<script type="text/javascript" src="popup.js"></script>
+    <form class="form-horizontal">
+        <div class="control-group">
+            <!--<label class="control-label" for="user">用户名</label> -->
+            <div class="controls">
+                <input class="form-input" type="text" id="user" name="user" placeholder="用户名">
+            </div>
+        </div>
+        <div>
+            <!--<label class="control-label" for="psw">密码</label> -->
+            <div class="input-control">
+                <input class="form-input" type="password" id="psw" name="psw" placeholder="密码">
+            </div>
+        </div>
+
+        <div class="control-group">
+            <div class="controls">
+                <button type="submit" id="ok" class="btn btn-info">确定</button>
+            </div>
+        </div>
+        <p id="suc">Please set your ID and password</p>
+        <script type="text/javascript" src="bootstrap.min.js"></script>
+        <script type="text/javascript" src="popup.js"></script>
+        <link href="bootstrap.css" rel="stylesheet">
+    </form>
 </body>
 </html>
