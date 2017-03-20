@@ -44,8 +44,8 @@ function main(){
     var outputArr;
     var output;
     var capForm = document.getElementById('captcha');
-    var psw = document.getElementById('pass');
-    var user = document.getElementById('user');
+    psw = document.getElementById('pass');
+    user = document.getElementById('user');
     var str = '';
     var str2 = "";
     for(var i=0;i<number;i++)
@@ -70,23 +70,26 @@ function main(){
     }
     capForm.value=str;
     console.log(str);
-	
-	while(psw.value==''){
-		console.log('wait');
-	}
-    
-	var button = document.getElementsByClassName("btn");
-    //user.click();
-    button[0].click();
-    //t=setTimeout("judge()",10);
+    button = document.getElementsByClassName("btn");
+    psw.click();
 
+    waitClick();
     //drawCut(imgGrey,recordX,recordY,number);
 }
 
-function judge()
-{
-    if(document.getElementsByTagName("title")[0].innerText=="上海交通大学统一身份认证")
-    {
+function waitClick() {
+    console.log(psw.value);
+    if (psw.value=="") {
+        t = setTimeout("waitClick()", 100);
+    }
+    else{
+        button[0].click();
+        t=setTimeout("judge()",100);
+    }
+}
+
+function judge() {
+    if(document.getElementsByTagName("title")[0].innerText=="上海交通大学统一身份认证") {
         main();
     }
 }
@@ -445,5 +448,7 @@ function recognize(x1){
 }
 
 //chrome.browserAction.onClicked.addListener(updateIcon)
-t=setTimeout("main()",100);
+window.onload = function(){
+    t=setTimeout("main()",100);
+};
 

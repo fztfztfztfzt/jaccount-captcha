@@ -5,7 +5,7 @@
   "content_scripts": [{
     "matches":["https://jaccount.sjtu.edu.cn/*"],
     "js":["main.js"],
-    "run_at":"document_idle",
+    "run_at":"document_start",
     "all_frame":true
   }],
   "permissions": ["tabs","storage"],
