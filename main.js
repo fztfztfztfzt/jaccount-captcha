@@ -70,10 +70,14 @@ function main(){
     }
     capForm.value=str;
     console.log(str);
-    var button = document.getElementsByClassName("btn");
-    psw.click();
-
-    //button[0].click();
+	
+	while(psw.value==''){
+		console.log('wait');
+	}
+    
+	var button = document.getElementsByClassName("btn");
+    //user.click();
+    button[0].click();
     //t=setTimeout("judge()",10);
 
     //drawCut(imgGrey,recordX,recordY,number);
