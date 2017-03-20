@@ -1,5 +1,5 @@
 {
-  "name": "JACOUNT code recognizing",
+  "name": "JACCOUNT captcha recognizing",
   "description": "recognize and fill the table of code",
   "version": "0.1",
   "content_scripts": [{
