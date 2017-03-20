@@ -27,7 +27,6 @@ ok.onclick = function save(){
 		console.log("保存成功")
 	});
 	chrome.storage.sync.set({'pwd': localPwd.value}, function(result) {
-		var tmp = document.getElementById('suc');
-		tmp.innerHTML="succeed";
+        window.close();
 	});
 }
