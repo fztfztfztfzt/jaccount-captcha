@@ -6,6 +6,7 @@ function main(){
     caCanvas.width = captcha.naturalWidth;
     caCanvas.height= captcha.naturalHeight;
     var ctx = caCanvas.getContext('2d');
+    caCanvas.style.display='none';
     ctx.drawImage(captcha, 0, 0);
     var imgData = ctx.getImageData(0,0,caCanvas.width,caCanvas.height).data;
     var imgGrey = convertToGray(imgData);
