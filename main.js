@@ -78,7 +78,7 @@ function main(){
 }
 
 function waitClick() {
-    if (psw.value=="") {
+    if (psw.value=="" || typeof(psw.value)=="undefined" ||typeof(user.value)=="undefined" || user.value=="") {
         chrome.storage.sync.get('user', function(result) {
             user.value=result['user'];
         });
@@ -88,6 +88,7 @@ function waitClick() {
         t = setTimeout("waitClick()", 100);
     }
     else{
+        console.log("clicking!!");
         button[0].click();
         t=setTimeout("judge()",100);
     }
