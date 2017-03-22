@@ -78,12 +78,16 @@ function main(){
 }
 
 function waitClick() {
-    if (psw.value=="" || typeof(psw.value)=="undefined" ||typeof(user.value)=="undefined" || user.value=="") {
+    if (psw.value=="" ||psw.value=="undefined"||user.value=="undefined"|| typeof(psw.value)=="undefined" ||typeof(user.value)=="undefined" || user.value=="") {
         chrome.storage.sync.get('user', function(result) {
             user.value=result['user'];
+            if(user.value=="undefined")
+                user.value='';
         });
         chrome.storage.sync.get('pwd', function(result) {
             psw.value=result['pwd'];
+            if(psw.value=="undefined")
+                psw.value='';
         });
         t = setTimeout("waitClick()", 100);
     }
