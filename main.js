@@ -72,13 +72,22 @@ function main(){
     capForm.value=str;
     console.log(str);
     button = document.getElementsByClassName("btn");
-
-    waitClick();
+    isAutoLog();
     //drawCut(imgGrey,recordX,recordY,number);
 }
+function isAutoLog(){
+    login = false;
+    chrome.storage.sync.get('autoLogin', function(result) {
+        login = result['autoLogin'];
+        waitClick(login);
+    });
+}
 
-function waitClick() {
-    if (psw.value=="" ||psw.value=="undefined"||user.value=="undefined"|| typeof(psw.value)=="undefined" ||typeof(user.value)=="undefined" || user.value=="") {
+function waitClick(login) {
+    //var login=isAutoLog();
+    console.log(login);
+    if (login==true&&(psw.value=="" ||psw.value=="undefined"||user.value=="undefined"|| typeof(psw.value)=="undefined" ||typeof(user.value)=="undefined" || user.value=="")) {
+        console.log("auto login");
         chrome.storage.sync.get('user', function(result) {
             user.value=result['user'];
             if(user.value=="undefined")
@@ -89,9 +98,9 @@ function waitClick() {
             if(psw.value=="undefined")
                 psw.value='';
         });
-        t = setTimeout("waitClick()", 100);
+        t = setTimeout("isAutoLog()", 100);
     }
-    else{
+    else if(login==true){
         console.log("clicking!!");
         button[0].click();
         t=setTimeout("judge()",100);
