@@ -1,7 +1,7 @@
 {
   "name": "jAcap",
   "description": "recognize and fill captcha on jAccount",
-  "version": "1.1",
+  "version": "1.4",
   "content_scripts": [{
     "matches":["https://jaccount.sjtu.edu.cn/*"],
     "js":["main.js"],
@@ -14,5 +14,6 @@
       "name": "Click to re-recognize",
       "default_popup":"popup.html"
   },
-  "manifest_version": 2
+  "manifest_version": 2,
+  "icons": {"48": "ja.png"}
 }
