@@ -19,3 +19,5 @@ https://chrome.google.com/webstore/detail/jacap/dgnigmgogebihejgojnklnhcfjcehld
 2. 点击右上角 __菜单->更多工具->扩展程序__
 3. 将 crx 文件从资源管理器中 __拖入“扩展程序”窗口__ 即可
 4. 如安装失败，请确认 (1) 操作是否正确 (2) crx 文件是否来自 [Release](https://github.com/fztfztfztfzt/jaccount-captcha/releases/) 页面或网上应用店
+
+***
