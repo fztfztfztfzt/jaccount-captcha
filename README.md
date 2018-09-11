@@ -11,7 +11,7 @@ SJTU Jaccount Captcha auto recognize extension.
 
 通过下面链接，使用chrome webstore安装。推荐使用如下方式安装，因为一旦我们的项目有更新，chrome会为您自动更新。
 
-https://chrome.google.com/webstore/detail/jacap/dgnigmgogebihejgojnklnhcfjcehld
+https://chrome.google.com/webstore/detail/jacap/dgnigmgogebihejgojnklnhcfjcehldl
 
 #### 通过Crx文件安装
 
