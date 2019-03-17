@@ -2,7 +2,7 @@ function main(){
     console.log("Start");
     var caCanvas = document.createElement("canvas");
     document.body.appendChild(caCanvas);
-    var captcha = document.getElementsByTagName('img')[1];
+    var captcha = document.getElementById('captcha-img');
     caCanvas.width = captcha.naturalWidth;
     caCanvas.height= captcha.naturalHeight;
     var ctx = caCanvas.getContext('2d');
